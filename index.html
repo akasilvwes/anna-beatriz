@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <meta
+        name="description"
+        content="Uma experiência criada especialmente para Anna Beatriz."
+    >
+
+    <title>Anna Beatriz — Uma história</title>
+
+    <!-- Tipografia -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================================================
+         EXPERIÊNCIA
+    ========================================================== -->
+
+    <main id="experience">
+
+        <!-- Canvas cinematográfico -->
+        <canvas id="world"></canvas>
+
+        <!-- Iluminação controlada pelo mouse/toque -->
+        <div id="cursor-light"></div>
+
+        <!-- Granulação cinematográfica -->
+        <div class="film-grain"></div>
+
+        <!-- Vinheta -->
+        <div class="vignette"></div>
+
+        <!-- Linha superior -->
+        <div class="top-line"></div>
+
+        <!-- Indicador de cena -->
+        <div id="scene-counter">
+            <span id="scene-current">01</span>
+            <span class="counter-separator">/</span>
+            <span id="scene-total">16</span>
+        </div>
+
+        <!-- =====================================================
+             TELA DE ENTRADA
+        ====================================================== -->
+
+        <section id="intro-screen" class="intro-screen">
+
+            <div class="intro-center">
+
+                <div class="intro-dot" id="intro-dot"></div>
+
+                <div class="intro-message" id="intro-message">
+                    <span>Uma história</span>
+                    <span>que não existia</span>
+                    <span>até você chegar.</span>
+                </div>
+
+            </div>
+
+            <button
+                id="start-button"
+                class="text-button"
+                type="button"
+                aria-label="Começar experiência"
+            >
+                <span>usar fones</span>
+                <small>começar</small>
+            </button>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONTEÚDO PRINCIPAL
+        ====================================================== -->
+
+        <section
+            id="story"
+            class="story hidden"
+            aria-live="polite"
+        >
+
+            <!-- As cenas serão inseridas pelo JavaScript -->
+
+            <div id="scene-container"></div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONTROLES
+        ====================================================== -->
+
+        <div
+            id="continue-hint"
+            class="continue-hint"
+        >
+            <span>toque para continuar</span>
+        </div>
+
+        <button
+            id="next-button"
+            class="next-button"
+            type="button"
+            aria-label="Próxima cena"
+        >
+            <span></span>
+            <span></span>
+        </button>
+
+        <button
+            id="back-button"
+            class="back-button"
+            type="button"
+            aria-label="Cena anterior"
+        >
+            voltar
+        </button>
+
+
+        <!-- =====================================================
+             CONTROLE DE ÁUDIO
+        ====================================================== -->
+
+        <div class="audio-control">
+
+            <button
+                id="sound-button"
+                type="button"
+                aria-label="Ativar ou pausar música"
+            >
+                <span class="sound-icon">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </span>
+
+                <span id="sound-label">som</span>
+            </button>
+
+        </div>
+
+
+        <!-- =====================================================
+             ÁUDIO
+        ====================================================== -->
+
+        <audio
+            id="music"
+            preload="auto"
+            loop
+            playsinline
+        >
+            <source src="assets/music/musica.mp3" type="audio/mpeg">
+        </audio>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

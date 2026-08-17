@@ -1,0 +1,1205 @@
+/* ============================================================
+   RESET
+============================================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    background: #050505;
+    color-scheme: dark;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    background: #050505;
+    color: #f1eee8;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    font-family: "Space Grotesk", sans-serif;
+}
+
+
+/* ============================================================
+   EXPERIÊNCIA
+============================================================ */
+
+#experience {
+    position: relative;
+
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,255,255,0.025),
+            transparent 42%
+        ),
+        #050505;
+
+    isolation: isolate;
+
+    cursor: none;
+
+    touch-action: manipulation;
+
+    padding:
+        env(safe-area-inset-top)
+        env(safe-area-inset-right)
+        env(safe-area-inset-bottom)
+        env(safe-area-inset-left);
+}
+
+
+/* ============================================================
+   CANVAS
+============================================================ */
+
+#world {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    opacity: 0.92;
+}
+
+
+/* ============================================================
+   LUZ DO CURSOR
+============================================================ */
+
+#cursor-light {
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    left: 0;
+    top: 0;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 2;
+
+    transform:
+        translate3d(
+            calc(var(--mouse-x, 50vw) - 210px),
+            calc(var(--mouse-y, 50vh) - 210px),
+            0
+        );
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.065) 0%,
+            rgba(255,255,255,0.025) 20%,
+            transparent 68%
+        );
+
+    mix-blend-mode: screen;
+
+    transition:
+        opacity 0.5s ease,
+        transform 0.12s linear;
+}
+
+
+/* ============================================================
+   FILME / GRANULAÇÃO
+============================================================ */
+
+.film-grain {
+    position: absolute;
+
+    inset: -50%;
+
+    z-index: 15;
+
+    pointer-events: none;
+
+    opacity: 0.045;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+
+    animation: grain 0.18s steps(2) infinite;
+}
+
+@keyframes grain {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(-2%, 1%);
+    }
+
+    50% {
+        transform: translate(1%, -2%);
+    }
+
+    75% {
+        transform: translate(2%, 2%);
+    }
+
+    100% {
+        transform: translate(-1%, -1%);
+    }
+}
+
+
+/* ============================================================
+   VINHETA
+============================================================ */
+
+.vignette {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 10;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 45%,
+            rgba(0,0,0,0.32) 100%
+        );
+}
+
+
+/* ============================================================
+   LINHA SUPERIOR
+============================================================ */
+
+.top-line {
+    position: absolute;
+
+    left: 5vw;
+    right: 5vw;
+    top: calc(env(safe-area-inset-top) + 18px);
+
+    height: 1px;
+
+    z-index: 20;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.15),
+            transparent
+        );
+}
+
+
+/* ============================================================
+   INTRO
+============================================================ */
+
+.intro-screen {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 30;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    background: #050505;
+
+    transition:
+        opacity 1.4s cubic-bezier(.77,0,.18,1),
+        visibility 1.4s;
+}
+
+.intro-screen.leaving {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.intro-center {
+    position: relative;
+
+    width: min(90vw, 700px);
+    height: 260px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.intro-dot {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #f5f2eb;
+
+    box-shadow:
+        0 0 18px rgba(255,255,255,0.35);
+
+    transition:
+        transform 1.5s cubic-bezier(.16,1,.3,1),
+        opacity 1s ease;
+}
+
+.intro-dot.expand {
+    transform: scale(140);
+    opacity: 0;
+}
+
+.intro-message {
+    position: absolute;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 2px;
+
+    text-align: center;
+
+    opacity: 0;
+
+    transform: translateY(16px);
+
+    transition:
+        opacity 1.3s ease,
+        transform 1.3s cubic-bezier(.16,1,.3,1);
+}
+
+.intro-message.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.intro-message span {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+
+    font-weight: 400;
+
+    line-height: 0.98;
+
+    letter-spacing: -0.02em;
+}
+
+.intro-message span:nth-child(2) {
+    font-style: italic;
+}
+
+.text-button {
+    position: absolute;
+
+    bottom: calc(
+        env(safe-area-inset-bottom) + 10vh
+    );
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border: 0;
+
+    background: none;
+
+    color: #f1eee8;
+
+    cursor: none;
+
+    text-align: center;
+
+    font-family: "Space Grotesk", sans-serif;
+
+    opacity: 0;
+
+    animation: appearButton 1s ease 2s forwards;
+}
+
+.text-button span {
+    display: block;
+
+    font-family: "DM Mono", monospace;
+
+    font-size: 9px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.26em;
+
+    opacity: 0.42;
+
+    margin-bottom: 12px;
+}
+
+.text-button small {
+    display: block;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.25em;
+
+    transition:
+        letter-spacing 0.4s ease,
+        opacity 0.4s ease;
+}
+
+.text-button:hover small {
+    letter-spacing: 0.4em;
+    opacity: 0.65;
+}
+
+@keyframes appearButton {
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* ============================================================
+   STORY
+============================================================ */
+
+.story {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 5;
+
+    opacity: 1;
+
+    transition: opacity 0.5s ease;
+}
+
+.story.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   CENA
+============================================================ */
+
+.scene {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        clamp(70px, 10vw, 140px)
+        clamp(24px, 9vw, 160px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform: translate3d(0, 0, 0);
+
+    transition:
+        opacity 0.85s cubic-bezier(.77,0,.18,1),
+        transform 1.1s cubic-bezier(.16,1,.3,1);
+}
+
+.scene.active {
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+.scene.exit-left {
+    opacity: 0;
+    transform: translateX(-4vw);
+}
+
+.scene.exit-right {
+    opacity: 0;
+    transform: translateX(4vw);
+}
+
+
+/* ============================================================
+   TEXTO
+============================================================ */
+
+.scene-inner {
+    position: relative;
+
+    width: min(100%, 900px);
+
+    text-align: center;
+}
+
+.scene-date {
+    margin-bottom: clamp(18px, 3vh, 34px);
+
+    font-family: "DM Mono", monospace;
+
+    font-size: clamp(9px, 1vw, 12px);
+
+    letter-spacing: 0.32em;
+
+    text-transform: uppercase;
+
+    opacity: 0.42;
+}
+
+.scene-title {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(2.4rem, 6vw, 5.8rem);
+
+    font-weight: 400;
+
+    line-height: 0.95;
+
+    letter-spacing: -0.035em;
+}
+
+.scene-copy {
+    margin: 22px auto 0;
+
+    max-width: 620px;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(1.25rem, 2.4vw, 2rem);
+
+    line-height: 1.28;
+
+    font-weight: 300;
+
+    color: rgba(241,238,232,0.78);
+}
+
+.scene-small {
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: clamp(10px, 1.1vw, 13px);
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+
+    opacity: 0.38;
+}
+
+
+/* ============================================================
+   ANIMAÇÕES INDIVIDUAIS
+============================================================ */
+
+.scene[data-style="origin"] .scene-inner {
+    transform: translateY(20px);
+    opacity: 0;
+}
+
+.scene.active[data-style="origin"] .scene-inner {
+    animation: originIn 1.5s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+@keyframes originIn {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+.scene[data-style="memory"] .scene-title {
+    letter-spacing: 0.08em;
+    opacity: 0;
+}
+
+.scene.active[data-style="memory"] .scene-title {
+    animation: memoryTitle 1.5s ease forwards;
+}
+
+@keyframes memoryTitle {
+    to {
+        letter-spacing: -0.02em;
+        opacity: 1;
+    }
+}
+
+
+.scene[data-style="date"] .scene-date {
+    transform: translateY(-20px);
+    opacity: 0;
+}
+
+.scene.active[data-style="date"] .scene-date {
+    animation: dateIn 1.2s ease forwards;
+}
+
+@keyframes dateIn {
+    to {
+        transform: translateY(0);
+        opacity: 0.45;
+    }
+}
+
+
+.scene[data-style="quiet"] .scene-inner {
+    max-width: 680px;
+}
+
+.scene[data-style="quiet"] .scene-copy {
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+
+.scene[data-style="letter"] {
+    align-items: center;
+}
+
+.scene[data-style="letter"] .scene-inner {
+    max-width: 650px;
+
+    text-align: left;
+}
+
+.scene[data-style="letter"] .scene-title {
+    font-size: clamp(2rem, 5vw, 4.4rem);
+}
+
+.scene[data-style="letter"] .scene-copy {
+    max-width: 620px;
+
+    margin-left: 0;
+
+    font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+
+    line-height: 1.45;
+}
+
+
+/* ============================================================
+   CLÍMAX
+============================================================ */
+
+.scene[data-style="final"] {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.scene[data-style="final"] .scene-inner {
+    max-width: 1000px;
+}
+
+.final-name {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(2.3rem, 7vw, 6.5rem);
+
+    font-weight: 400;
+
+    line-height: 0.95;
+
+    margin-bottom: 28px;
+}
+
+.final-title {
+    position: relative;
+
+    display: inline-block;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(2.2rem, 7vw, 6.5rem);
+
+    font-weight: 500;
+
+    line-height: 0.95;
+
+    letter-spacing: -0.035em;
+
+    color: #f4f1ea;
+
+    filter: blur(12px);
+
+    opacity: 0;
+
+    transform: scale(0.97);
+
+    animation:
+        finalReveal 3s
+        cubic-bezier(.16,1,.3,1)
+        0.5s
+        forwards;
+}
+
+.final-title::after {
+    content: "";
+
+    position: absolute;
+
+    left: -20%;
+    top: 0;
+
+    width: 20%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.55),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    opacity: 0;
+
+    animation:
+        finalLight 2.3s
+        ease
+        2.2s
+        forwards;
+}
+
+.final-author {
+    margin-top: 35px;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(1.15rem, 2vw, 1.6rem);
+
+    font-style: italic;
+
+    opacity: 0;
+
+    animation:
+        authorIn 1.4s
+        ease
+        3.2s
+        forwards;
+}
+
+@keyframes finalReveal {
+    to {
+        filter: blur(0);
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes finalLight {
+    0% {
+        left: -20%;
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 120%;
+        opacity: 0;
+    }
+}
+
+@keyframes authorIn {
+    to {
+        opacity: 0.55;
+    }
+}
+
+
+/* ============================================================
+   CONTADOR
+============================================================ */
+
+#scene-counter {
+    position: absolute;
+
+    top: calc(
+        env(safe-area-inset-top) + 32px
+    );
+
+    left: 5vw;
+
+    z-index: 30;
+
+    font-family: "DM Mono", monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 0.18em;
+
+    opacity: 0.35;
+
+    transition: opacity 0.5s ease;
+}
+
+.counter-separator {
+    margin: 0 5px;
+    opacity: 0.4;
+}
+
+
+/* ============================================================
+   CONTINUE
+============================================================ */
+
+.continue-hint {
+    position: absolute;
+
+    left: 50%;
+
+    bottom:
+        calc(
+            env(safe-area-inset-bottom) + 4.5vh
+        );
+
+    transform: translateX(-50%);
+
+    z-index: 30;
+
+    font-family: "DM Mono", monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 0.25em;
+
+    text-transform: uppercase;
+
+    opacity: 0.25;
+
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+
+    pointer-events: none;
+}
+
+.continue-hint.hidden {
+    opacity: 0;
+}
+
+
+/* ============================================================
+   NEXT
+============================================================ */
+
+.next-button {
+    position: absolute;
+
+    right: 5vw;
+
+    bottom:
+        calc(
+            env(safe-area-inset-bottom) + 4vh
+        );
+
+    width: 50px;
+    height: 50px;
+
+    z-index: 40;
+
+    border: 0;
+
+    background: transparent;
+
+    cursor: none;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        transform 0.4s ease,
+        opacity 0.4s ease;
+}
+
+.next-button span {
+    position: absolute;
+
+    display: block;
+
+    width: 22px;
+    height: 1px;
+
+    background: rgba(255,255,255,0.65);
+
+    transform-origin: right center;
+
+    transition:
+        transform 0.4s ease,
+        width 0.4s ease;
+}
+
+.next-button span:first-child {
+    transform: rotate(45deg) translateX(2px);
+}
+
+.next-button span:last-child {
+    transform: rotate(-45deg) translateX(2px);
+}
+
+.next-button:hover {
+    transform: translateX(6px);
+}
+
+.next-button:hover span {
+    width: 30px;
+}
+
+
+/* ============================================================
+   BACK
+============================================================ */
+
+.back-button {
+    position: absolute;
+
+    left: 5vw;
+
+    bottom:
+        calc(
+            env(safe-area-inset-bottom) + 4.8vh
+        );
+
+    z-index: 40;
+
+    border: 0;
+
+    background: transparent;
+
+    color: rgba(255,255,255,0.35);
+
+    font-family: "DM Mono", monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 0.18em;
+
+    text-transform: uppercase;
+
+    cursor: none;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.4s ease,
+        color 0.4s ease;
+}
+
+.back-button.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.back-button:hover {
+    color: rgba(255,255,255,0.8);
+}
+
+
+/* ============================================================
+   SOM
+============================================================ */
+
+.audio-control {
+    position: absolute;
+
+    right: 5vw;
+
+    top:
+        calc(
+            env(safe-area-inset-top) + 28px
+        );
+
+    z-index: 40;
+}
+
+#sound-button {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: rgba(255,255,255,0.42);
+
+    font-family: "DM Mono", monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+
+    cursor: none;
+}
+
+.sound-icon {
+    display: flex;
+
+    align-items: center;
+
+    gap: 2px;
+
+    height: 12px;
+}
+
+.sound-icon i {
+    display: block;
+
+    width: 1px;
+
+    height: 5px;
+
+    background: currentColor;
+
+    transition:
+        height 0.3s ease;
+}
+
+.sound-icon i:nth-child(2) {
+    height: 10px;
+}
+
+.sound-icon i:nth-child(3) {
+    height: 7px;
+}
+
+#sound-button.playing .sound-icon i {
+    animation: soundBars 0.8s ease-in-out infinite alternate;
+}
+
+#sound-button.playing .sound-icon i:nth-child(2) {
+    animation-delay: -0.3s;
+}
+
+#sound-button.playing .sound-icon i:nth-child(3) {
+    animation-delay: -0.15s;
+}
+
+@keyframes soundBars {
+    from {
+        height: 3px;
+    }
+
+    to {
+        height: 11px;
+    }
+}
+
+
+/* ============================================================
+   CURSOR
+============================================================ */
+
+@media (pointer: fine) {
+
+    #experience {
+        cursor: none;
+    }
+
+    #experience::after {
+        content: "";
+
+        position: absolute;
+
+        width: 7px;
+        height: 7px;
+
+        left: var(--mouse-x, 50vw);
+        top: var(--mouse-y, 50vh);
+
+        z-index: 100;
+
+        border: 1px solid rgba(255,255,255,0.65);
+
+        border-radius: 50%;
+
+        transform: translate(-50%, -50%);
+
+        pointer-events: none;
+
+        box-shadow:
+            0 0 12px rgba(255,255,255,0.12);
+    }
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 700px) {
+
+    #experience {
+        cursor: default;
+    }
+
+    #cursor-light {
+        width: 300px;
+        height: 300px;
+
+        transform:
+            translate3d(
+                calc(var(--mouse-x, 50vw) - 150px),
+                calc(var(--mouse-y, 50vh) - 150px),
+                0
+            );
+    }
+
+    .top-line {
+        left: 8vw;
+        right: 8vw;
+    }
+
+    #scene-counter {
+        left: 8vw;
+    }
+
+    .audio-control {
+        right: 8vw;
+    }
+
+    .scene {
+        padding:
+            100px
+            24px
+            100px;
+    }
+
+    .scene-inner {
+        width: 100%;
+    }
+
+    .scene-title {
+        font-size: clamp(2.35rem, 12vw, 4rem);
+    }
+
+    .scene-copy {
+        max-width: 330px;
+
+        font-size: clamp(1.18rem, 6vw, 1.55rem);
+
+        line-height: 1.25;
+    }
+
+    .scene[data-style="letter"] .scene-inner {
+        text-align: center;
+    }
+
+    .scene[data-style="letter"] .scene-copy {
+        margin-left: auto;
+        font-size: 1.22rem;
+        line-height: 1.38;
+    }
+
+    .continue-hint {
+        bottom:
+            calc(
+                env(safe-area-inset-bottom) + 7vh
+            );
+    }
+
+    .next-button {
+        right: 4vw;
+
+        bottom:
+            calc(
+                env(safe-area-inset-bottom) + 3vh
+            );
+    }
+
+    .back-button {
+        left: 6vw;
+
+        bottom:
+            calc(
+                env(safe-area-inset-bottom) + 3.5vh
+            );
+    }
+
+    .final-title {
+        font-size: clamp(2.2rem, 12vw, 4.5rem);
+        max-width: 340px;
+    }
+
+    .final-name {
+        font-size: clamp(2.2rem, 11vw, 4rem);
+    }
+}
+
+
+/* ============================================================
+   REDUÇÃO DE MOVIMENTO
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .film-grain {
+        animation: none;
+    }
+}
